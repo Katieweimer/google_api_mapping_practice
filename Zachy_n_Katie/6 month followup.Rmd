@@ -59,9 +59,6 @@ setwd("~/creation//Map Project")
 data <- read_csv("6_Month_Data.csv")
 bostonbb <- data[ which(data$Boston=='Y'), ]
 notbostonb <-data[ which(data$Boston=='N'), ]
-f1<-data[ which(data$Title=='First Big Flirt'), ]
-k1<-data[ which(data$Title=='First Kiss'),]
-d1 <-data[which(data$Title=='First Date'),]
 ```
 
 
