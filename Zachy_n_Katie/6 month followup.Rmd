@@ -47,14 +47,13 @@ library(extrafont)
 #devtools::install_github
 #find_rtools() 
 #library(Rtools)
-#api key AIzaSyA6bgGgqJcITuRg1UUa-w466i5Qs74lpx8 (this one not affiliated with billing)
-# AIzaSyBH4xoz_vsbnqJygEFBlF1KbH4taoZMC9g
+
 ```
 
 
 ###Set API key, workspace, load data
 ```{r}
-register_google(key = "AIzaSyBH4xoz_vsbnqJygEFBlF1KbH4taoZMC9g")
+register_google(key = USE YOUR GOOGLE API KEY HERE)
 
 setwd("~/creation//Map Project")
 data <- read_csv("6_Month_Data.csv")
