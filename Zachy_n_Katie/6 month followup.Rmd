@@ -1,0 +1,137 @@
+---
+title: "6 Month Followup"
+author: "Kathleen Weimer"
+date: "2/13/2020"
+output: pdf_document
+---
+
+###Install Packages (muted)
+```{r package setup, include=FALSE}
+#install.packages("lubridate")
+#install.packages("ggplot2")
+#install.packages("data.table")
+#install.packages("ggrepel")
+#install.packages("dplyr")
+#install.packages("data.table")
+#install.packages("tidyverse")
+#install.packages("ggmap")
+#install.packages("devtools")
+#install.packages("Rtools")
+#install.packages("tibble")
+#install.packages("extrafont")
+```
+
+### Load Libraries
+```{r program setup, include=FALSE}
+library(devtools)
+library(rgdal)
+library(plyr)
+library(stringr)
+library(ggplot2)
+library(spdep)
+library(broom)
+library(lubridate)
+library(dplyr)
+library(data.table)
+library(ggrepel)
+library(tidyverse)
+library(ggmap)
+library(readr)
+library(grid)
+library(extrafont)
+```
+
+### Reference from recomendations (muted)
+```{r}
+#if(!requireNamespace("devtools")) install.packages("devtools")
+#devtools::install_github
+#find_rtools() 
+#library(Rtools)
+#api key AIzaSyA6bgGgqJcITuRg1UUa-w466i5Qs74lpx8 (this one not affiliated with billing)
+# AIzaSyBH4xoz_vsbnqJygEFBlF1KbH4taoZMC9g
+```
+
+
+###Set API key, workspace, load data
+```{r}
+register_google(key = "AIzaSyBH4xoz_vsbnqJygEFBlF1KbH4taoZMC9g")
+
+setwd("~/creation//Map Project")
+data <- read_csv("6_Month_Data.csv")
+bostonbb <- data[ which(data$Boston=='Y'), ]
+notbostonb <-data[ which(data$Boston=='N'), ]
+f1<-data[ which(data$Title=='First Big Flirt'), ]
+k1<-data[ which(data$Title=='First Kiss'),]
+d1 <-data[which(data$Title=='First Date'),]
+```
+
+
+```{r}
+
+center = c(Longitude=-71.09, Latitude=42.335)
+jpeg("Results1.jpeg", width = 600, height = 600, quality = 75,units = "px", pointsize = 10)
+qmap(center, zoom = 12, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "darkred", data = f1, alpha= 1, size = 3)+
+  ggtitle("Friendship")+
+  theme(plot.title=element_text(family="Palatino", face="italic", size=24, color = "gray27", margin = margin(t = 70, b = -90)))
+dev.off()
+
+jpeg("Results2.jpeg", width = 600, height = 600, units = "px", pointsize = 10)
+qmap(center, zoom = 12, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "darkred", data = k1, alpha= 1, size = 3)+
+  ggtitle("First Kiss")+
+  theme(plot.title=element_text(family="Palatino", face="italic", size=24, color = "gray27", margin = margin(t = 70, b = -90)))
+dev.off()
+
+jpeg("Results3.jpeg", width = 600, height = 600, units = "px", pointsize = 10)
+qmap(center, zoom = 12, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "darkred", data = d1, alpha= 1, size = 3)+
+  ggtitle("First date")+
+  theme(plot.title=element_text(family="Palatino", face="italic", size=24, color = "gray27", margin = margin(t = 70, b = -90)))
+dev.off()
+
+jpeg("1Year.jpeg", width = 600, height = 600, units = "px", pointsize = 10)
+qmap(center, zoom = 12, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "darkred", data = bostonbb, alpha= 1, size = 3)+
+  ggtitle("1 year of Katie+Zachy")+
+  theme(plot.title=element_text(family="Palatino", face="italic", size=26, color = "gray27", margin = margin(t = 70, b = -90)))
+dev.off()
+
+
+jpeg("1Year1.jpeg", width = 600, height = 600, units = "px", pointsize = 10)
+qmap(center, zoom = 12, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "darkred", data = bostonbb, alpha= 1, size = 3)
+dev.off()
+
+jpeg("1YearGB.jpeg", width = 600, height = 600, units = "px", pointsize = 10)
+center = c(Longitude= -73, Latitude=42.5) 
+qmap(center, zoom = 7, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "red3", data = notbostonb, alpha= 1, size = 3) +
+  theme(legend.position="none")
+dev.off()
+```
+
+
+
+```{r}
+data <- read_csv("1_year_Data.csv")
+bostonbb <- data[ which(data$Boston=='Y'), ]
+notbostonb <-data[ which(data$Boston=='N'), ]
+```
+
+```{r}
+center = c(Longitude= -73, Latitude=42) 
+jpeg("Results5.jpeg", width = 600, height = 600, units = "px", pointsize = 10)
+center = c(Longitude= -73, Latitude=42) 
+qmap(center, zoom = 7, source = "stamen", maptype = "watercolor") +
+  geom_point(aes(x = Longitude, y = Latitude), colour = "red3", data = notbostonb, alpha= 1, size = 3) +
+  theme(legend.position="none")
+dev.off()
+```
+
+
+
+#Reference
+### Tutorial - https://www.littlemissdata.com/blog/maps
+### Ggmap documentation - http://stat405.had.co.nz/ggmap.pdf
+### : Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA. 
